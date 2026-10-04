@@ -86,9 +86,8 @@ const sp=i=>P[i].x.reduce((s,x,j)=>s+(((S.a[i]||[])[j]==x[1])?1:0),0);
 const cs=()=>C.reduce((s,q,i)=>s+(S.c[i]!=null?q.o[S.c[i]][1]:0),0);
 const tot=()=>P.reduce((s,p,i)=>s+sp(i),0)+cs();
 function R(top){try{localStorage.setItem('b35',JSON.stringify(S))}catch(e){}
- const doc=location.hash=='#docente';
- document.getElementById('prog').textContent=doc?'':(S.s>=2&&S.s<=6?`Pista ${S.s-1} de 5 · Equipo ${S.n}`:'');
- app.innerHTML=doc?VT():[V0,V1,V2,V2,V2,V2,V2,V7,V8][S.s]();
+ document.getElementById('prog').textContent=S.s>=2&&S.s<=6?`Pista ${S.s-1} de 5 · Equipo ${S.n}`:'';
+ app.innerHTML=[V0,V1,V2,V2,V2,V2,V2,V7,V8][S.s]();
  if(top!==false)window.scrollTo(0,0)}
 function V0(){return `<div class="sheet"><span class="stamp">CONFIDENCIAL</span><p class="exp" style="margin-top:14px">EXPEDIENTE Nº 0735 · JULIO DE 1935</p><h1>EL CASO<br>BORDABEHERE</h1><p class="sub">Una bala en el Senado</p><p>Buenos Aires, 23 de julio de 1935. Cámara de Senadores de la Nación.</p><label for="nm">Nombre del equipo de investigación<input id="nm" maxlength="24" value="${esc(S.n)}" autocomplete="off"></label><button class="b" onclick="g0()">Abrir expediente</button></div>`}
 function g0(){const v=document.getElementById('nm').value.trim();S.n=(v||'EQUIPO').toUpperCase();S.s=1;R()}
@@ -103,12 +102,6 @@ function V8(){const t=tot(),pc=t/MAX,m=pc>=.8?'Detectives de primera: distinguie
  return `<div class="sheet"><span class="stamp v">EXPEDIENTE ENTREGADO</span><p class="exp" style="margin-top:14px">Equipo ${esc(S.n)}</p><div class="big">${t} / ${MAX}</div><p>${m}</p><p>Pistas: ${P.map((p,i)=>sp(i)+'/4').join(' · ')}. Conclusiones: ${cs()}/8.</p><p class="exp">Código para su docente</p><span class="code">${esc(code())}</span><button class="b" onclick="cp()">Copiar código</button><p style="font-size:.9rem;margin-top:14px">Esperen la puesta en común: cada equipo expone su hipótesis.</p><button class="b" style="background:transparent;color:var(--ink);border:2px solid var(--ink);box-shadow:none" onclick="rs(this)">Empezar de nuevo</button></div>`}
 function rs(b){if(b.dataset.s){S={n:'',s:0,a:[],r:[],c:[]};R()}else{b.dataset.s=1;b.textContent='¿Seguro? Se borran las respuestas. Tocá de nuevo para confirmar'}}
 function cp(){try{navigator.clipboard.writeText(code())}catch(e){}}
-function VT(){return `<div class="sheet"><span class="stamp">PANEL DOCENTE</span><h2 style="margin-top:14px">Resultados de los equipos</h2><label for="cd">Peguen un código por línea<textarea id="cd" oninput="tb()" placeholder="EQUIPO_1-342416"></textarea></label><div id="tb" class="sc"></div><button class="b" onclick="cc()">Mostrar caso cerrado</button><div id="cl"></div></div>`}
-function pz(l){const m=l.trim().toUpperCase().match(/^(.*?)[-\s]*(\d{6})$/);if(!m||!m[1])return;const d=[...m[2]].map(Number),ps=d.slice(0,5),c=d[5];if(ps.some(v=>v>4)||c>8)return;return{n:m[1].replace(/_/g,' '),ps,c,t:ps.reduce((a,b)=>a+b,0)+c}}
-function tb(){const r=document.getElementById('cd').value.split('\n').map(pz).filter(Boolean).sort((a,b)=>b.t-a.t);
- document.getElementById('tb').innerHTML=r.length?`<table><tr><th>Equipo</th><th>P1</th><th>P2</th><th>P3</th><th>P4</th><th>P5</th><th>Concl.</th><th>Total</th></tr>${r.map(x=>`<tr><td>${esc(x.n)}</td>${x.ps.map(v=>`<td>${v}/4</td>`).join('')}<td>${x.c}/8</td><td><b>${x.t}/${MAX}</b></td></tr>`).join('')}</table>`:''}
-function cc(){document.getElementById('cl').innerHTML=`<hr><span class="stamp v">CASO CERRADO</span><h2 style="margin-top:14px">Lo que la historia nos enseña</h2><p class="bl">1. El ejecutor material fue Ramón Valdez Cora. Eso es indiscutible.</p><p class="bl">2. Los mandantes nunca fueron juzgados: la justicia de la Década Infame no investigó.</p><p class="bl">3. El crimen ocurrió porque el debate parlamentario amenazaba intereses económicos enormes, los del Pacto Roca-Runciman.</p><p class="bl">4. Bordabehere murió intentando proteger la única voz que denunciaba ese entramado.</p><blockquote>“No hay crimen sin contexto. En historia, el contexto es la explicación.”</blockquote>`}
-window.addEventListener('hashchange',()=>R());
 R(false);
 </script>
 </body>
